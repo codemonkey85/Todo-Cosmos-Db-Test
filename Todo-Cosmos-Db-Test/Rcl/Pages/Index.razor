@@ -2,14 +2,24 @@
 
 <h1>Hello, world!</h1>
 
-<p>@message</p>
+@if (Todos is { Count: > 0 })
+{
+    <ul>
+        @foreach (var todo in Todos)
+        {
+            <li>
+                @todo.Title
+            </li>
+        }
+    </ul>
+}
 
 @code {
-    private string message = string.Empty;
+    private List<Todo>? Todos;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        message = await HttpClient.GetStringAsync("api/message");
+        Todos = await HttpClient.GetFromJsonAsync<List<Todo>>("api/todos");
     }
 }

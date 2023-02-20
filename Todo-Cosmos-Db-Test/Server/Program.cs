@@ -1,3 +1,5 @@
+using Todo_Cosmos_Db_Test.Server.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
@@ -19,6 +21,8 @@ app.UseRouting();
 
 app.MapFallbackToFile("index.html");
 
-app.MapGet("api/message", () => "Hello from the API!");
+var apiGroup = app.MapGroup("api");
+
+apiGroup.MapTodoEndpoints();
 
 app.Run();
