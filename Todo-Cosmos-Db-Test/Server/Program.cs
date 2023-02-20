@@ -1,6 +1,14 @@
-using Todo_Cosmos_Db_Test.Server.Endpoints;
-
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
+var services = builder.Services;
+
+services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen()
+    .AddScoped(_ => config)
+    .AddHttpContextAccessor()
+    .AddDbContext<DatabaseContext>(options => options.UseCosmos("connectionString", "databaseName"))
+    .AddScoped<ITodoService, TodoService>();
 
 var app = builder.Build();
 
