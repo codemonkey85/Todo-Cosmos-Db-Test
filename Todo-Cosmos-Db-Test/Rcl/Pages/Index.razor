@@ -1,0 +1,15 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+<p>@message</p>
+
+@code {
+    private string message = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        message = await HttpClient.GetStringAsync("api/message");
+    }
+}
